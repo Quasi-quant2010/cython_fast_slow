@@ -1,0 +1,16 @@
+NumPyが物足りない人へのCython入門
+https://github.com/tokyo-scipy/archive/tree/master/003
+
+をほぼすべて踏襲。
+
+違いは、
+・matmult_3_1
+→matmult3に関し、結果をmallocして計算して後、python objectでreturn
+・matmult_3_2
+→matmult_3_1に、@cython.boundscheck(false)を付け加えた物
+
+結論
+cythonによる高速化 
+・行列計算はnumpy使え 
+・for文のネストはcdef内で行う 
+・mallocすると、最終的にpython objectに戻す場面が出てくるので、 numpy.ndarrayに型情報を与えアクセスをCレベルに高速化させる(indexはcdef)
